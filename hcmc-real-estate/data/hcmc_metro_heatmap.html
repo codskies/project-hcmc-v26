@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_c52fe4158df029ff8a1a281cdad2601a {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+</head>
+<body>
+    
+    
+    <div style="position:fixed;top:12px;left:50%;transform:translateX(-50%);
+                z-index:2000;pointer-events:none;">
+      <div style="background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);
+                  padding:10px 24px;border-radius:30px;
+                  box-shadow:0 4px 20px rgba(0,0,0,0.14);
+                  font-family:'Segoe UI',Arial,sans-serif;text-align:center;">
+        <span style="font-size:15px;font-weight:800;color:#1a1a2e;letter-spacing:0.5px;">
+          HCMC Metro Line 1
+        </span>
+        <span style="font-size:12px;color:#e84393;font-weight:700;margin:0 8px;">|</span>
+        <span style="font-size:12px;color:#888;">
+          Real Estate Price Map 2026
+        </span>
+      </div>
+    </div>
+    
+    
+    <div style="position:fixed;bottom:30px;left:30px;z-index:1500;
+                background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);
+                padding:18px 20px;border-radius:14px;
+                box-shadow:0 4px 24px rgba(0,0,0,0.16);
+                font-family:'Segoe UI',Arial,sans-serif;
+                min-width:230px;max-width:248px;
+                border:1px solid rgba(0,0,0,0.06);">
+
+      <!-- Title -->
+      <div style="font-size:10px;font-weight:800;color:#1a1a2e;
+                  letter-spacing:2px;text-transform:uppercase;margin-bottom:2px;">
+        Price Heatmap
+      </div>
+      <div style="font-size:11px;color:#aaa;margin-bottom:10px;">
+        VND per m&sup2; &nbsp;&middot;&nbsp; 2026 Mock Data
+      </div>
+
+      <!-- Gradient bar -->
+      <div style="height:10px;border-radius:6px;margin-bottom:5px;
+                  background:linear-gradient(to right,
+                    #313695,#74add1,#fee090,#f46d43,#d73027,#a50026);">
+      </div>
+      <div style="display:flex;justify-content:space-between;
+                  font-size:9px;color:#bbb;letter-spacing:0.5px;margin-bottom:16px;">
+        <span>LOW</span><span>HIGH</span>
+      </div>
+
+      <!-- Tier heading -->
+      <div style="font-size:10px;font-weight:700;color:#555;
+                  letter-spacing:1.5px;text-transform:uppercase;margin-bottom:9px;">
+        Investment Tiers
+      </div>
+
+      <!-- T1 -->
+      <div style="display:flex;align-items:flex-start;margin-bottom:8px;">
+        <span style="background:#a50026;width:12px;height:12px;border-radius:50%;
+                     display:inline-block;margin-right:9px;flex-shrink:0;margin-top:2px;">
+        </span>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:#333;">
+            Prime Asset &nbsp;<span style="color:#ccc;font-weight:400;">T1</span>
+          </div>
+          <div style="font-size:10px;color:#bbb;">&gt; 400M/m&sup2;</div>
+        </div>
+      </div>
+
+      <!-- T2 -->
+      <div style="display:flex;align-items:flex-start;margin-bottom:8px;">
+        <span style="background:#d73027;width:12px;height:12px;border-radius:50%;
+                     display:inline-block;margin-right:9px;flex-shrink:0;margin-top:2px;">
+        </span>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:#333;">
+            High Growth &nbsp;<span style="color:#ccc;font-weight:400;">T2</span>
+          </div>
+          <div style="font-size:10px;color:#bbb;">150M – 400M/m&sup2;</div>
+        </div>
+      </div>
+
+      <!-- T3 -->
+      <div style="display:flex;align-items:flex-start;margin-bottom:8px;">
+        <span style="background:#f46d43;width:12px;height:12px;border-radius:50%;
+                     display:inline-block;margin-right:9px;flex-shrink:0;margin-top:2px;">
+        </span>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:#333;">
+            Strong Value &nbsp;<span style="color:#ccc;font-weight:400;">T3</span>
+          </div>
+          <div style="font-size:10px;color:#bbb;">70M – 150M/m&sup2;</div>
+        </div>
+      </div>
+
+      <!-- T4 -->
+      <div style="display:flex;align-items:flex-start;margin-bottom:14px;">
+        <span style="background:#4fc3f7;width:12px;height:12px;border-radius:50%;
+                     display:inline-block;margin-right:9px;flex-shrink:0;margin-top:2px;">
+        </span>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:#333;">
+            Emerging Zone &nbsp;<span style="color:#ccc;font-weight:400;">T4</span>
+          </div>
+          <div style="font-size:10px;color:#bbb;">&lt; 70M/m&sup2;</div>
+        </div>
+      </div>
+
+      <hr style="border:none;border-top:1px solid #f0f0f0;margin:0 0 10px 0;">
+
+      <!-- Map symbols -->
+      <div style="display:flex;align-items:center;margin-bottom:6px;">
+        <span style="background:#4fc3f7;width:22px;height:3px;display:inline-block;
+                     margin-right:9px;border-radius:2px;opacity:0.55;flex-shrink:0;">
+        </span>
+        <span style="font-size:10px;color:#bbb;">500m walking zone</span>
+      </div>
+      <div style="display:flex;align-items:center;margin-bottom:12px;">
+        <span style="background:#e84393;width:22px;height:3px;display:inline-block;
+                     margin-right:9px;border-radius:2px;flex-shrink:0;">
+        </span>
+        <span style="font-size:10px;color:#bbb;">Metro Line 1 route</span>
+      </div>
+
+      <div style="text-align:center;font-size:9px;color:#ddd;letter-spacing:0.5px;">
+        Click markers &nbsp;&middot;&nbsp; Toggle layers top-right
+      </div>
+    </div>
+    
+    
+            <div class="folium-map" id="map_c52fe4158df029ff8a1a281cdad2601a" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_c52fe4158df029ff8a1a281cdad2601a = L.map(
+                "map_c52fe4158df029ff8a1a281cdad2601a",
+                {
+                    center: [10.8239, 106.7605],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_fdd72fa87aa7dc516665ec74ba3b8654 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_fdd72fa87aa7dc516665ec74ba3b8654.addTo(map_c52fe4158df029ff8a1a281cdad2601a);
+        
+    
+            var tile_layer_85c4a7339a6daed722e381833a04b8c7 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_85c4a7339a6daed722e381833a04b8c7.addTo(map_c52fe4158df029ff8a1a281cdad2601a);
+        
+    
+            var tile_layer_86f24bffd3a8070c1a902b7e26b7c82b = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Tiles \u0026copy; Esri \u0026mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_86f24bffd3a8070c1a902b7e26b7c82b.addTo(map_c52fe4158df029ff8a1a281cdad2601a);
+        
+    
+            var feature_group_bb1dabf672c59250c69a723fd5af2979 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var heat_map_68dbebae2279169dd70d6d59047e45ec = L.heatLayer(
+                [[10.772, 106.6985, 1.0], [10.7847, 106.7052, 0.6428571428571429], [10.7908, 106.715, 0.17142857142857143], [10.7985, 106.7235, 0.14285714285714285], [10.802, 106.738, 0.2571428571428571], [10.8015, 106.7495, 0.21428571428571427], [10.8075, 106.76, 0.11428571428571428], [10.8138, 106.771, 0.09285714285714286], [10.821, 106.7815, 0.07857142857142857], [10.849, 106.754, 0.07142857142857142], [10.8536, 106.7975, 0.06428571428571428], [10.87, 106.802, 0.05714285714285714], [10.882, 106.8195, 0.05], [10.8882, 106.8318, 0.04285714285714286]],
+                {
+  "minOpacity": 0.35,
+  "maxZoom": 16,
+  "radius": 45,
+  "blur": 30,
+  "gradient": {
+  "0.0": "#313695",
+  "0.2": "#74add1",
+  "0.4": "#fee090",
+  "0.65": "#f46d43",
+  "0.85": "#d73027",
+  "1.0": "#a50026",
+},
+}
+            );
+        
+    
+            heat_map_68dbebae2279169dd70d6d59047e45ec.addTo(feature_group_bb1dabf672c59250c69a723fd5af2979);
+        
+    
+            feature_group_bb1dabf672c59250c69a723fd5af2979.addTo(map_c52fe4158df029ff8a1a281cdad2601a);
+        
+    
+            var feature_group_e62dba93918a79e5c0181e2c8f6e44d3 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_2c2bc1489d57caaec71038357a6b0c63 = L.circle(
+                [10.772, 106.6985],
+                {"bubblingMouseEvents": true, "color": "#4fc3f7", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.55, "radius": 500, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_e62dba93918a79e5c0181e2c8f6e44d3);
+        
+    
+            circle_2c2bc1489d57caaec71038357a6b0c63.bindTooltip(
+                `<div>
+                     Ben Thanh · 500m walking zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_8c477d5598591f462f20222846bc771c = L.circle(
+                [10.7847, 106.7052],
+                {"bubblingMouseEvents": true, "color": "#4fc3f7", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.55, "radius": 500, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_e62dba93918a79e5c0181e2c8f6e44d3);
+        
+    
+            circle_8c477d5598591f462f20222846bc771c.bindTooltip(
+                `<div>
+                     Ba Son · 500m walking zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_4f0d091742cbef142f34183decb6b46b = L.circle(
+                [10.7908, 106.715],
+                {"bubblingMouseEvents": true, "color": "#4fc3f7", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.55, "radius": 500, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_e62dba93918a79e5c0181e2c8f6e44d3);
+        
+    
+            circle_4f0d091742cbef142f34183decb6b46b.bindTooltip(
+                `<div>
+                     Van Thanh Park · 500m walking zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_533ddaa20eb6e07f61233213c8c932f1 = L.circle(
+                [10.7985, 106.7235],
+                {"bubblingMouseEvents": true, "color": "#4fc3f7", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.55, "radius": 500, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_e62dba93918a79e5c0181e2c8f6e44d3);
+        
+    
+            circle_533ddaa20eb6e07f61233213c8c932f1.bindTooltip(
+                `<div>
+                     Tan Cang · 500m walking zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_3ce51af3460e51ef56cb0da76c9f31c9 = L.circle(
+                [10.802, 106.738],
+                {"bubblingMouseEvents": true, "color": "#4fc3f7", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.55, "radius": 500, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_e62dba93918a79e5c0181e2c8f6e44d3);
+        
+    
+            circle_3ce51af3460e51ef56cb0da76c9f31c9.bindTooltip(
+                `<div>
+                     Thao Dien · 500m walking zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_e5464bd80beb10b6f54a00336c06db3f = L.circle(
+                [10.8015, 106.7495],
+                {"bubblingMouseEvents": true, "color": "#4fc3f7", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.55, "radius": 500, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_e62dba93918a79e5c0181e2c8f6e44d3);
+        
+    
+            circle_e5464bd80beb10b6f54a00336c06db3f.bindTooltip(
+                `<div>
+                     An Phu · 500m walking zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_3c7499b57de70ddf297f463740198284 = L.circle(
+                [10.8075, 106.76],
+                {"bubblingMouseEvents": true, "color": "#4fc3f7", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.55, "radius": 500, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_e62dba93918a79e5c0181e2c8f6e44d3);
+        
+    
+            circle_3c7499b57de70ddf297f463740198284.bindTooltip(
+                `<div>
+                     Rach Chiec · 500m walking zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_53f59485446ef533286cb7c56b6c56e8 = L.circle(
+                [10.8138, 106.771],
+                {"bubblingMouseEvents": true, "color": "#4fc3f7", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.55, "radius": 500, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_e62dba93918a79e5c0181e2c8f6e44d3);
+        
+    
+            circle_53f59485446ef533286cb7c56b6c56e8.bindTooltip(
+                `<div>
+                     Phuoc Long · 500m walking zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_42dc2972b1a6edd91ba2274b34dc534f = L.circle(
+                [10.821, 106.7815],
+                {"bubblingMouseEvents": true, "color": "#4fc3f7", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.55, "radius": 500, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_e62dba93918a79e5c0181e2c8f6e44d3);
+        
+    
+            circle_42dc2972b1a6edd91ba2274b34dc534f.bindTooltip(
+                `<div>
+                     Binh Thai · 500m walking zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_f27f7467150e19294b6aaedc6e5a4853 = L.circle(
+                [10.849, 106.754],
+                {"bubblingMouseEvents": true, "color": "#4fc3f7", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.55, "radius": 500, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_e62dba93918a79e5c0181e2c8f6e44d3);
+        
+    
+            circle_f27f7467150e19294b6aaedc6e5a4853.bindTooltip(
+                `<div>
+                     Thu Duc · 500m walking zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_ebc7e3c3501dc5e0fa19a72859c2b4fc = L.circle(
+                [10.8536, 106.7975],
+                {"bubblingMouseEvents": true, "color": "#4fc3f7", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.55, "radius": 500, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_e62dba93918a79e5c0181e2c8f6e44d3);
+        
+    
+            circle_ebc7e3c3501dc5e0fa19a72859c2b4fc.bindTooltip(
+                `<div>
+                     High-Tech Park · 500m walking zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_c9425c27ba5cfcd6fa9757805f0ada04 = L.circle(
+                [10.87, 106.802],
+                {"bubblingMouseEvents": true, "color": "#4fc3f7", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.55, "radius": 500, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_e62dba93918a79e5c0181e2c8f6e44d3);
+        
+    
+            circle_c9425c27ba5cfcd6fa9757805f0ada04.bindTooltip(
+                `<div>
+                     VNU-HCM · 500m walking zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_6b0140829f88b74d81ea42eb095edc5a = L.circle(
+                [10.882, 106.8195],
+                {"bubblingMouseEvents": true, "color": "#4fc3f7", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.55, "radius": 500, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_e62dba93918a79e5c0181e2c8f6e44d3);
+        
+    
+            circle_6b0140829f88b74d81ea42eb095edc5a.bindTooltip(
+                `<div>
+                     Tang Nhon Phu B · 500m walking zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_e0c00dae5731641b6a1da596339034a9 = L.circle(
+                [10.8882, 106.8318],
+                {"bubblingMouseEvents": true, "color": "#4fc3f7", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.55, "radius": 500, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_e62dba93918a79e5c0181e2c8f6e44d3);
+        
+    
+            circle_e0c00dae5731641b6a1da596339034a9.bindTooltip(
+                `<div>
+                     Suoi Tien · 500m walking zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_e62dba93918a79e5c0181e2c8f6e44d3.addTo(map_c52fe4158df029ff8a1a281cdad2601a);
+        
+    
+            var feature_group_816ebbc122106b330caa8bfe6883faa8 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var poly_line_421f7c8e5093170bd4e7550c8ce23fdd = L.polyline(
+                [[10.772, 106.6985], [10.7847, 106.7052], [10.7908, 106.715], [10.7985, 106.7235], [10.802, 106.738], [10.8015, 106.7495], [10.8075, 106.76], [10.8138, 106.771], [10.821, 106.7815], [10.849, 106.754], [10.8536, 106.7975], [10.87, 106.802], [10.882, 106.8195], [10.8882, 106.8318]],
+                {"bubblingMouseEvents": true, "color": "#e84393", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#e84393", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(feature_group_816ebbc122106b330caa8bfe6883faa8);
+        
+    
+            poly_line_421f7c8e5093170bd4e7550c8ce23fdd.bindTooltip(
+                `<div>
+                     Metro Line 1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_816ebbc122106b330caa8bfe6883faa8.addTo(map_c52fe4158df029ff8a1a281cdad2601a);
+        
+    
+            var feature_group_e50615cb9693d032435204aebac9aa58 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_0ddd6b5eb17d99a40491cbd9fa87d220 = L.circleMarker(
+                [10.772, 106.6985],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#a50026", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_e50615cb9693d032435204aebac9aa58);
+        
+    
+        var popup_dafeba99a402ee87d5edd8a08915b321 = L.popup({
+  "maxWidth": 315,
+});
+
+        
+            
+                var html_a6c8b0bc43772c53135801afe9e532d8 = $(`<div id="html_a6c8b0bc43772c53135801afe9e532d8" style="width: 100.0%; height: 100.0%;">     <div style="font-family:'Segoe UI',Arial,sans-serif;width:295px;border-radius:14px;                 overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.22);border:1px solid #eee;">        <!-- ── Header ── -->       <div style="background:linear-gradient(135deg,#e84393 0%,#c0392b 100%);padding:16px 18px;">         <div style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.7);                     text-transform:uppercase;margin-bottom:5px;">           Metro Line 1 &nbsp;·&nbsp; Station 1 / 14         </div>         <div style="font-size:21px;font-weight:800;color:#fff;line-height:1.15;">           Ben Thanh         </div>         <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:3px;">           District 1         </div>       </div>        <!-- ── Body ── -->       <div style="background:#fff;padding:16px 18px;">          <!-- Price block -->         <div style="background:#fff5f5;border-left:4px solid #a50026;                     padding:11px 14px;border-radius:0 10px 10px 0;margin-bottom:13px;">           <div style="font-size:9px;color:#aaa;letter-spacing:2px;                       text-transform:uppercase;">Market Price &nbsp;·&nbsp; 2026</div>           <div style="font-size:30px;font-weight:900;color:#a50026;                       line-height:1.1;margin-top:3px;">             700M           </div>           <div style="font-size:11px;color:#999;margin-top:2px;">VND per m²</div>         </div>          <!-- Investment rating block -->         <div style="background:#f8f9fa;border-radius:10px;padding:11px 14px;                     margin-bottom:13px;display:flex;align-items:center;                     justify-content:space-between;">           <div style="flex:1;min-width:0;">             <div style="font-size:9px;color:#aaa;letter-spacing:2px;                         text-transform:uppercase;">2026 Investment Rating</div>             <div style="font-size:15px;font-weight:800;color:#a50026;                         margin-top:3px;">Prime Asset</div>             <div style="font-size:11px;color:#999;margin-top:2px;">Core CBD · Maximum liquidity</div>           </div>           <div style="text-align:center;padding-left:12px;flex-shrink:0;">             <div style="font-size:17px;color:#f57c00;                         letter-spacing:1px;">★★★★★</div>             <div style="font-size:9px;color:#ccc;letter-spacing:1px;                         text-transform:uppercase;margin-top:3px;">               Tier 1             </div>           </div>         </div>          <!-- Stats row -->         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Walking Zone</div>             <div style="font-size:15px;font-weight:700;color:#333;margin-top:3px;">500 m</div>           </div>           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Route</div>             <div style="font-size:15px;font-weight:700;color:#e84393;margin-top:3px;">               Metro 1             </div>           </div>         </div>          <div style="text-align:center;font-size:10px;color:#ddd;">           Data for illustrative purposes only         </div>       </div>     </div>     </div>`)[0];
+                popup_dafeba99a402ee87d5edd8a08915b321.setContent(html_a6c8b0bc43772c53135801afe9e532d8);
+            
+        
+
+        circle_marker_0ddd6b5eb17d99a40491cbd9fa87d220.bindPopup(popup_dafeba99a402ee87d5edd8a08915b321)
+        ;
+
+        
+    
+    
+            circle_marker_0ddd6b5eb17d99a40491cbd9fa87d220.bindTooltip(
+                `<div>
+                     <b>Ben Thanh</b>&nbsp;·&nbsp;700M/m²&nbsp;·&nbsp;<i>Prime Asset</i>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_04aa518ac18ff21a53ec1875b4ef98c5 = L.circleMarker(
+                [10.7847, 106.7052],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#a50026", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_e50615cb9693d032435204aebac9aa58);
+        
+    
+        var popup_fcd235dc342601f352a0bc6e9c3e9110 = L.popup({
+  "maxWidth": 315,
+});
+
+        
+            
+                var html_304a48d548d6b702fd01ce912a394795 = $(`<div id="html_304a48d548d6b702fd01ce912a394795" style="width: 100.0%; height: 100.0%;">     <div style="font-family:'Segoe UI',Arial,sans-serif;width:295px;border-radius:14px;                 overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.22);border:1px solid #eee;">        <!-- ── Header ── -->       <div style="background:linear-gradient(135deg,#e84393 0%,#c0392b 100%);padding:16px 18px;">         <div style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.7);                     text-transform:uppercase;margin-bottom:5px;">           Metro Line 1 &nbsp;·&nbsp; Station 2 / 14         </div>         <div style="font-size:21px;font-weight:800;color:#fff;line-height:1.15;">           Ba Son         </div>         <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:3px;">           District 1         </div>       </div>        <!-- ── Body ── -->       <div style="background:#fff;padding:16px 18px;">          <!-- Price block -->         <div style="background:#fff5f5;border-left:4px solid #a50026;                     padding:11px 14px;border-radius:0 10px 10px 0;margin-bottom:13px;">           <div style="font-size:9px;color:#aaa;letter-spacing:2px;                       text-transform:uppercase;">Market Price &nbsp;·&nbsp; 2026</div>           <div style="font-size:30px;font-weight:900;color:#a50026;                       line-height:1.1;margin-top:3px;">             450M           </div>           <div style="font-size:11px;color:#999;margin-top:2px;">VND per m²</div>         </div>          <!-- Investment rating block -->         <div style="background:#f8f9fa;border-radius:10px;padding:11px 14px;                     margin-bottom:13px;display:flex;align-items:center;                     justify-content:space-between;">           <div style="flex:1;min-width:0;">             <div style="font-size:9px;color:#aaa;letter-spacing:2px;                         text-transform:uppercase;">2026 Investment Rating</div>             <div style="font-size:15px;font-weight:800;color:#a50026;                         margin-top:3px;">Prime Asset</div>             <div style="font-size:11px;color:#999;margin-top:2px;">Core CBD · Maximum liquidity</div>           </div>           <div style="text-align:center;padding-left:12px;flex-shrink:0;">             <div style="font-size:17px;color:#f57c00;                         letter-spacing:1px;">★★★★★</div>             <div style="font-size:9px;color:#ccc;letter-spacing:1px;                         text-transform:uppercase;margin-top:3px;">               Tier 1             </div>           </div>         </div>          <!-- Stats row -->         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Walking Zone</div>             <div style="font-size:15px;font-weight:700;color:#333;margin-top:3px;">500 m</div>           </div>           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Route</div>             <div style="font-size:15px;font-weight:700;color:#e84393;margin-top:3px;">               Metro 1             </div>           </div>         </div>          <div style="text-align:center;font-size:10px;color:#ddd;">           Data for illustrative purposes only         </div>       </div>     </div>     </div>`)[0];
+                popup_fcd235dc342601f352a0bc6e9c3e9110.setContent(html_304a48d548d6b702fd01ce912a394795);
+            
+        
+
+        circle_marker_04aa518ac18ff21a53ec1875b4ef98c5.bindPopup(popup_fcd235dc342601f352a0bc6e9c3e9110)
+        ;
+
+        
+    
+    
+            circle_marker_04aa518ac18ff21a53ec1875b4ef98c5.bindTooltip(
+                `<div>
+                     <b>Ba Son</b>&nbsp;·&nbsp;450M/m²&nbsp;·&nbsp;<i>Prime Asset</i>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ddebab5dcfccbe4fff7670e7fa5ad4ad = L.circleMarker(
+                [10.7908, 106.715],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f46d43", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_e50615cb9693d032435204aebac9aa58);
+        
+    
+        var popup_991ed28933e2193abaf15e91edef6554 = L.popup({
+  "maxWidth": 315,
+});
+
+        
+            
+                var html_7143ed7e653998d3db857804e0b74c89 = $(`<div id="html_7143ed7e653998d3db857804e0b74c89" style="width: 100.0%; height: 100.0%;">     <div style="font-family:'Segoe UI',Arial,sans-serif;width:295px;border-radius:14px;                 overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.22);border:1px solid #eee;">        <!-- ── Header ── -->       <div style="background:linear-gradient(135deg,#e84393 0%,#c0392b 100%);padding:16px 18px;">         <div style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.7);                     text-transform:uppercase;margin-bottom:5px;">           Metro Line 1 &nbsp;·&nbsp; Station 3 / 14         </div>         <div style="font-size:21px;font-weight:800;color:#fff;line-height:1.15;">           Van Thanh Park         </div>         <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:3px;">           Binh Thanh         </div>       </div>        <!-- ── Body ── -->       <div style="background:#fff;padding:16px 18px;">          <!-- Price block -->         <div style="background:#f0fff4;border-left:4px solid #e06c00;                     padding:11px 14px;border-radius:0 10px 10px 0;margin-bottom:13px;">           <div style="font-size:9px;color:#aaa;letter-spacing:2px;                       text-transform:uppercase;">Market Price &nbsp;·&nbsp; 2026</div>           <div style="font-size:30px;font-weight:900;color:#e06c00;                       line-height:1.1;margin-top:3px;">             120M           </div>           <div style="font-size:11px;color:#999;margin-top:2px;">VND per m²</div>         </div>          <!-- Investment rating block -->         <div style="background:#f8f9fa;border-radius:10px;padding:11px 14px;                     margin-bottom:13px;display:flex;align-items:center;                     justify-content:space-between;">           <div style="flex:1;min-width:0;">             <div style="font-size:9px;color:#aaa;letter-spacing:2px;                         text-transform:uppercase;">2026 Investment Rating</div>             <div style="font-size:15px;font-weight:800;color:#e06c00;                         margin-top:3px;">Strong Value</div>             <div style="font-size:11px;color:#999;margin-top:2px;">Mid-corridor · Solid fundamentals</div>           </div>           <div style="text-align:center;padding-left:12px;flex-shrink:0;">             <div style="font-size:17px;color:#9e9e9e;                         letter-spacing:1px;">★★★☆☆</div>             <div style="font-size:9px;color:#ccc;letter-spacing:1px;                         text-transform:uppercase;margin-top:3px;">               Tier 3             </div>           </div>         </div>          <!-- Stats row -->         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Walking Zone</div>             <div style="font-size:15px;font-weight:700;color:#333;margin-top:3px;">500 m</div>           </div>           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Route</div>             <div style="font-size:15px;font-weight:700;color:#e84393;margin-top:3px;">               Metro 1             </div>           </div>         </div>          <div style="text-align:center;font-size:10px;color:#ddd;">           Data for illustrative purposes only         </div>       </div>     </div>     </div>`)[0];
+                popup_991ed28933e2193abaf15e91edef6554.setContent(html_7143ed7e653998d3db857804e0b74c89);
+            
+        
+
+        circle_marker_ddebab5dcfccbe4fff7670e7fa5ad4ad.bindPopup(popup_991ed28933e2193abaf15e91edef6554)
+        ;
+
+        
+    
+    
+            circle_marker_ddebab5dcfccbe4fff7670e7fa5ad4ad.bindTooltip(
+                `<div>
+                     <b>Van Thanh Park</b>&nbsp;·&nbsp;120M/m²&nbsp;·&nbsp;<i>Strong Value</i>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a6e4e09218886e7e9ddcf6aa59c033f2 = L.circleMarker(
+                [10.7985, 106.7235],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f46d43", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_e50615cb9693d032435204aebac9aa58);
+        
+    
+        var popup_b92eec7788236deaf60fe83df6b9d2b2 = L.popup({
+  "maxWidth": 315,
+});
+
+        
+            
+                var html_243dd61825a87287a60c055757fb5950 = $(`<div id="html_243dd61825a87287a60c055757fb5950" style="width: 100.0%; height: 100.0%;">     <div style="font-family:'Segoe UI',Arial,sans-serif;width:295px;border-radius:14px;                 overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.22);border:1px solid #eee;">        <!-- ── Header ── -->       <div style="background:linear-gradient(135deg,#e84393 0%,#c0392b 100%);padding:16px 18px;">         <div style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.7);                     text-transform:uppercase;margin-bottom:5px;">           Metro Line 1 &nbsp;·&nbsp; Station 4 / 14         </div>         <div style="font-size:21px;font-weight:800;color:#fff;line-height:1.15;">           Tan Cang         </div>         <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:3px;">           Binh Thanh         </div>       </div>        <!-- ── Body ── -->       <div style="background:#fff;padding:16px 18px;">          <!-- Price block -->         <div style="background:#f0fff4;border-left:4px solid #e06c00;                     padding:11px 14px;border-radius:0 10px 10px 0;margin-bottom:13px;">           <div style="font-size:9px;color:#aaa;letter-spacing:2px;                       text-transform:uppercase;">Market Price &nbsp;·&nbsp; 2026</div>           <div style="font-size:30px;font-weight:900;color:#e06c00;                       line-height:1.1;margin-top:3px;">             100M           </div>           <div style="font-size:11px;color:#999;margin-top:2px;">VND per m²</div>         </div>          <!-- Investment rating block -->         <div style="background:#f8f9fa;border-radius:10px;padding:11px 14px;                     margin-bottom:13px;display:flex;align-items:center;                     justify-content:space-between;">           <div style="flex:1;min-width:0;">             <div style="font-size:9px;color:#aaa;letter-spacing:2px;                         text-transform:uppercase;">2026 Investment Rating</div>             <div style="font-size:15px;font-weight:800;color:#e06c00;                         margin-top:3px;">Strong Value</div>             <div style="font-size:11px;color:#999;margin-top:2px;">Mid-corridor · Solid fundamentals</div>           </div>           <div style="text-align:center;padding-left:12px;flex-shrink:0;">             <div style="font-size:17px;color:#9e9e9e;                         letter-spacing:1px;">★★★☆☆</div>             <div style="font-size:9px;color:#ccc;letter-spacing:1px;                         text-transform:uppercase;margin-top:3px;">               Tier 3             </div>           </div>         </div>          <!-- Stats row -->         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Walking Zone</div>             <div style="font-size:15px;font-weight:700;color:#333;margin-top:3px;">500 m</div>           </div>           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Route</div>             <div style="font-size:15px;font-weight:700;color:#e84393;margin-top:3px;">               Metro 1             </div>           </div>         </div>          <div style="text-align:center;font-size:10px;color:#ddd;">           Data for illustrative purposes only         </div>       </div>     </div>     </div>`)[0];
+                popup_b92eec7788236deaf60fe83df6b9d2b2.setContent(html_243dd61825a87287a60c055757fb5950);
+            
+        
+
+        circle_marker_a6e4e09218886e7e9ddcf6aa59c033f2.bindPopup(popup_b92eec7788236deaf60fe83df6b9d2b2)
+        ;
+
+        
+    
+    
+            circle_marker_a6e4e09218886e7e9ddcf6aa59c033f2.bindTooltip(
+                `<div>
+                     <b>Tan Cang</b>&nbsp;·&nbsp;100M/m²&nbsp;·&nbsp;<i>Strong Value</i>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2221df138ce4fb14832ecf35bfd37b2d = L.circleMarker(
+                [10.802, 106.738],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d73027", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_e50615cb9693d032435204aebac9aa58);
+        
+    
+        var popup_0cf83a6fda7bc4058e066bcd5f483eae = L.popup({
+  "maxWidth": 315,
+});
+
+        
+            
+                var html_0b03c00965c5a19e08688178998b8c71 = $(`<div id="html_0b03c00965c5a19e08688178998b8c71" style="width: 100.0%; height: 100.0%;">     <div style="font-family:'Segoe UI',Arial,sans-serif;width:295px;border-radius:14px;                 overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.22);border:1px solid #eee;">        <!-- ── Header ── -->       <div style="background:linear-gradient(135deg,#e84393 0%,#c0392b 100%);padding:16px 18px;">         <div style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.7);                     text-transform:uppercase;margin-bottom:5px;">           Metro Line 1 &nbsp;·&nbsp; Station 5 / 14         </div>         <div style="font-size:21px;font-weight:800;color:#fff;line-height:1.15;">           Thao Dien         </div>         <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:3px;">           Thu Duc (former D2)         </div>       </div>        <!-- ── Body ── -->       <div style="background:#fff;padding:16px 18px;">          <!-- Price block -->         <div style="background:#fff8f0;border-left:4px solid #d73027;                     padding:11px 14px;border-radius:0 10px 10px 0;margin-bottom:13px;">           <div style="font-size:9px;color:#aaa;letter-spacing:2px;                       text-transform:uppercase;">Market Price &nbsp;·&nbsp; 2026</div>           <div style="font-size:30px;font-weight:900;color:#d73027;                       line-height:1.1;margin-top:3px;">             180M           </div>           <div style="font-size:11px;color:#999;margin-top:2px;">VND per m²</div>         </div>          <!-- Investment rating block -->         <div style="background:#f8f9fa;border-radius:10px;padding:11px 14px;                     margin-bottom:13px;display:flex;align-items:center;                     justify-content:space-between;">           <div style="flex:1;min-width:0;">             <div style="font-size:9px;color:#aaa;letter-spacing:2px;                         text-transform:uppercase;">2026 Investment Rating</div>             <div style="font-size:15px;font-weight:800;color:#d73027;                         margin-top:3px;">High Growth</div>             <div style="font-size:11px;color:#999;margin-top:2px;">Expat belt · Strong appreciation</div>           </div>           <div style="text-align:center;padding-left:12px;flex-shrink:0;">             <div style="font-size:17px;color:#f57c00;                         letter-spacing:1px;">★★★★☆</div>             <div style="font-size:9px;color:#ccc;letter-spacing:1px;                         text-transform:uppercase;margin-top:3px;">               Tier 2             </div>           </div>         </div>          <!-- Stats row -->         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Walking Zone</div>             <div style="font-size:15px;font-weight:700;color:#333;margin-top:3px;">500 m</div>           </div>           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Route</div>             <div style="font-size:15px;font-weight:700;color:#e84393;margin-top:3px;">               Metro 1             </div>           </div>         </div>          <div style="text-align:center;font-size:10px;color:#ddd;">           Data for illustrative purposes only         </div>       </div>     </div>     </div>`)[0];
+                popup_0cf83a6fda7bc4058e066bcd5f483eae.setContent(html_0b03c00965c5a19e08688178998b8c71);
+            
+        
+
+        circle_marker_2221df138ce4fb14832ecf35bfd37b2d.bindPopup(popup_0cf83a6fda7bc4058e066bcd5f483eae)
+        ;
+
+        
+    
+    
+            circle_marker_2221df138ce4fb14832ecf35bfd37b2d.bindTooltip(
+                `<div>
+                     <b>Thao Dien</b>&nbsp;·&nbsp;180M/m²&nbsp;·&nbsp;<i>High Growth</i>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bd3be1c0aaa6d8e0365bb60ea7b37fe0 = L.circleMarker(
+                [10.8015, 106.7495],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d73027", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_e50615cb9693d032435204aebac9aa58);
+        
+    
+        var popup_9753b33a8c46a1fcc4bdd3443cd11943 = L.popup({
+  "maxWidth": 315,
+});
+
+        
+            
+                var html_b39a97c834dbcd8957c002ed49f2d312 = $(`<div id="html_b39a97c834dbcd8957c002ed49f2d312" style="width: 100.0%; height: 100.0%;">     <div style="font-family:'Segoe UI',Arial,sans-serif;width:295px;border-radius:14px;                 overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.22);border:1px solid #eee;">        <!-- ── Header ── -->       <div style="background:linear-gradient(135deg,#e84393 0%,#c0392b 100%);padding:16px 18px;">         <div style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.7);                     text-transform:uppercase;margin-bottom:5px;">           Metro Line 1 &nbsp;·&nbsp; Station 6 / 14         </div>         <div style="font-size:21px;font-weight:800;color:#fff;line-height:1.15;">           An Phu         </div>         <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:3px;">           Thu Duc (former D2)         </div>       </div>        <!-- ── Body ── -->       <div style="background:#fff;padding:16px 18px;">          <!-- Price block -->         <div style="background:#fff8f0;border-left:4px solid #d73027;                     padding:11px 14px;border-radius:0 10px 10px 0;margin-bottom:13px;">           <div style="font-size:9px;color:#aaa;letter-spacing:2px;                       text-transform:uppercase;">Market Price &nbsp;·&nbsp; 2026</div>           <div style="font-size:30px;font-weight:900;color:#d73027;                       line-height:1.1;margin-top:3px;">             150M           </div>           <div style="font-size:11px;color:#999;margin-top:2px;">VND per m²</div>         </div>          <!-- Investment rating block -->         <div style="background:#f8f9fa;border-radius:10px;padding:11px 14px;                     margin-bottom:13px;display:flex;align-items:center;                     justify-content:space-between;">           <div style="flex:1;min-width:0;">             <div style="font-size:9px;color:#aaa;letter-spacing:2px;                         text-transform:uppercase;">2026 Investment Rating</div>             <div style="font-size:15px;font-weight:800;color:#d73027;                         margin-top:3px;">High Growth</div>             <div style="font-size:11px;color:#999;margin-top:2px;">Expat belt · Strong appreciation</div>           </div>           <div style="text-align:center;padding-left:12px;flex-shrink:0;">             <div style="font-size:17px;color:#f57c00;                         letter-spacing:1px;">★★★★☆</div>             <div style="font-size:9px;color:#ccc;letter-spacing:1px;                         text-transform:uppercase;margin-top:3px;">               Tier 2             </div>           </div>         </div>          <!-- Stats row -->         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Walking Zone</div>             <div style="font-size:15px;font-weight:700;color:#333;margin-top:3px;">500 m</div>           </div>           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Route</div>             <div style="font-size:15px;font-weight:700;color:#e84393;margin-top:3px;">               Metro 1             </div>           </div>         </div>          <div style="text-align:center;font-size:10px;color:#ddd;">           Data for illustrative purposes only         </div>       </div>     </div>     </div>`)[0];
+                popup_9753b33a8c46a1fcc4bdd3443cd11943.setContent(html_b39a97c834dbcd8957c002ed49f2d312);
+            
+        
+
+        circle_marker_bd3be1c0aaa6d8e0365bb60ea7b37fe0.bindPopup(popup_9753b33a8c46a1fcc4bdd3443cd11943)
+        ;
+
+        
+    
+    
+            circle_marker_bd3be1c0aaa6d8e0365bb60ea7b37fe0.bindTooltip(
+                `<div>
+                     <b>An Phu</b>&nbsp;·&nbsp;150M/m²&nbsp;·&nbsp;<i>High Growth</i>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c2e6296867d8aedea8c34c3fd5075191 = L.circleMarker(
+                [10.8075, 106.76],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f46d43", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_e50615cb9693d032435204aebac9aa58);
+        
+    
+        var popup_b4fd05a14b34247711e14e7dd040e27e = L.popup({
+  "maxWidth": 315,
+});
+
+        
+            
+                var html_5eec5a42637ddfaf4bc9c14e86d8eee5 = $(`<div id="html_5eec5a42637ddfaf4bc9c14e86d8eee5" style="width: 100.0%; height: 100.0%;">     <div style="font-family:'Segoe UI',Arial,sans-serif;width:295px;border-radius:14px;                 overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.22);border:1px solid #eee;">        <!-- ── Header ── -->       <div style="background:linear-gradient(135deg,#e84393 0%,#c0392b 100%);padding:16px 18px;">         <div style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.7);                     text-transform:uppercase;margin-bottom:5px;">           Metro Line 1 &nbsp;·&nbsp; Station 7 / 14         </div>         <div style="font-size:21px;font-weight:800;color:#fff;line-height:1.15;">           Rach Chiec         </div>         <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:3px;">           Thu Duc (former D2)         </div>       </div>        <!-- ── Body ── -->       <div style="background:#fff;padding:16px 18px;">          <!-- Price block -->         <div style="background:#f0fff4;border-left:4px solid #e06c00;                     padding:11px 14px;border-radius:0 10px 10px 0;margin-bottom:13px;">           <div style="font-size:9px;color:#aaa;letter-spacing:2px;                       text-transform:uppercase;">Market Price &nbsp;·&nbsp; 2026</div>           <div style="font-size:30px;font-weight:900;color:#e06c00;                       line-height:1.1;margin-top:3px;">             80M           </div>           <div style="font-size:11px;color:#999;margin-top:2px;">VND per m²</div>         </div>          <!-- Investment rating block -->         <div style="background:#f8f9fa;border-radius:10px;padding:11px 14px;                     margin-bottom:13px;display:flex;align-items:center;                     justify-content:space-between;">           <div style="flex:1;min-width:0;">             <div style="font-size:9px;color:#aaa;letter-spacing:2px;                         text-transform:uppercase;">2026 Investment Rating</div>             <div style="font-size:15px;font-weight:800;color:#e06c00;                         margin-top:3px;">Strong Value</div>             <div style="font-size:11px;color:#999;margin-top:2px;">Mid-corridor · Solid fundamentals</div>           </div>           <div style="text-align:center;padding-left:12px;flex-shrink:0;">             <div style="font-size:17px;color:#9e9e9e;                         letter-spacing:1px;">★★★☆☆</div>             <div style="font-size:9px;color:#ccc;letter-spacing:1px;                         text-transform:uppercase;margin-top:3px;">               Tier 3             </div>           </div>         </div>          <!-- Stats row -->         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Walking Zone</div>             <div style="font-size:15px;font-weight:700;color:#333;margin-top:3px;">500 m</div>           </div>           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Route</div>             <div style="font-size:15px;font-weight:700;color:#e84393;margin-top:3px;">               Metro 1             </div>           </div>         </div>          <div style="text-align:center;font-size:10px;color:#ddd;">           Data for illustrative purposes only         </div>       </div>     </div>     </div>`)[0];
+                popup_b4fd05a14b34247711e14e7dd040e27e.setContent(html_5eec5a42637ddfaf4bc9c14e86d8eee5);
+            
+        
+
+        circle_marker_c2e6296867d8aedea8c34c3fd5075191.bindPopup(popup_b4fd05a14b34247711e14e7dd040e27e)
+        ;
+
+        
+    
+    
+            circle_marker_c2e6296867d8aedea8c34c3fd5075191.bindTooltip(
+                `<div>
+                     <b>Rach Chiec</b>&nbsp;·&nbsp;80M/m²&nbsp;·&nbsp;<i>Strong Value</i>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fdb4f3c78355f79ebaf66de23bd58f7a = L.circleMarker(
+                [10.8138, 106.771],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_e50615cb9693d032435204aebac9aa58);
+        
+    
+        var popup_921d107c4ffd81272718a6552c810b92 = L.popup({
+  "maxWidth": 315,
+});
+
+        
+            
+                var html_05afde134b192e61a07ad33ae1d660b1 = $(`<div id="html_05afde134b192e61a07ad33ae1d660b1" style="width: 100.0%; height: 100.0%;">     <div style="font-family:'Segoe UI',Arial,sans-serif;width:295px;border-radius:14px;                 overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.22);border:1px solid #eee;">        <!-- ── Header ── -->       <div style="background:linear-gradient(135deg,#e84393 0%,#c0392b 100%);padding:16px 18px;">         <div style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.7);                     text-transform:uppercase;margin-bottom:5px;">           Metro Line 1 &nbsp;·&nbsp; Station 8 / 14         </div>         <div style="font-size:21px;font-weight:800;color:#fff;line-height:1.15;">           Phuoc Long         </div>         <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:3px;">           Thu Duc (former D9)         </div>       </div>        <!-- ── Body ── -->       <div style="background:#fff;padding:16px 18px;">          <!-- Price block -->         <div style="background:#f0f8ff;border-left:4px solid #0277bd;                     padding:11px 14px;border-radius:0 10px 10px 0;margin-bottom:13px;">           <div style="font-size:9px;color:#aaa;letter-spacing:2px;                       text-transform:uppercase;">Market Price &nbsp;·&nbsp; 2026</div>           <div style="font-size:30px;font-weight:900;color:#0277bd;                       line-height:1.1;margin-top:3px;">             65M           </div>           <div style="font-size:11px;color:#999;margin-top:2px;">VND per m²</div>         </div>          <!-- Investment rating block -->         <div style="background:#f8f9fa;border-radius:10px;padding:11px 14px;                     margin-bottom:13px;display:flex;align-items:center;                     justify-content:space-between;">           <div style="flex:1;min-width:0;">             <div style="font-size:9px;color:#aaa;letter-spacing:2px;                         text-transform:uppercase;">2026 Investment Rating</div>             <div style="font-size:15px;font-weight:800;color:#0277bd;                         margin-top:3px;">Emerging Zone</div>             <div style="font-size:11px;color:#999;margin-top:2px;">Outer suburban · High upside risk</div>           </div>           <div style="text-align:center;padding-left:12px;flex-shrink:0;">             <div style="font-size:17px;color:#9e9e9e;                         letter-spacing:1px;">★★☆☆☆</div>             <div style="font-size:9px;color:#ccc;letter-spacing:1px;                         text-transform:uppercase;margin-top:3px;">               Tier 4             </div>           </div>         </div>          <!-- Stats row -->         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Walking Zone</div>             <div style="font-size:15px;font-weight:700;color:#333;margin-top:3px;">500 m</div>           </div>           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Route</div>             <div style="font-size:15px;font-weight:700;color:#e84393;margin-top:3px;">               Metro 1             </div>           </div>         </div>          <div style="text-align:center;font-size:10px;color:#ddd;">           Data for illustrative purposes only         </div>       </div>     </div>     </div>`)[0];
+                popup_921d107c4ffd81272718a6552c810b92.setContent(html_05afde134b192e61a07ad33ae1d660b1);
+            
+        
+
+        circle_marker_fdb4f3c78355f79ebaf66de23bd58f7a.bindPopup(popup_921d107c4ffd81272718a6552c810b92)
+        ;
+
+        
+    
+    
+            circle_marker_fdb4f3c78355f79ebaf66de23bd58f7a.bindTooltip(
+                `<div>
+                     <b>Phuoc Long</b>&nbsp;·&nbsp;65M/m²&nbsp;·&nbsp;<i>Emerging Zone</i>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2494f2fa8826684de067a2f0f3cd159f = L.circleMarker(
+                [10.821, 106.7815],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_e50615cb9693d032435204aebac9aa58);
+        
+    
+        var popup_0b5895f3b08695579ac022e978f6be9f = L.popup({
+  "maxWidth": 315,
+});
+
+        
+            
+                var html_9cd11f16e40bfcc19f16cb639dae5883 = $(`<div id="html_9cd11f16e40bfcc19f16cb639dae5883" style="width: 100.0%; height: 100.0%;">     <div style="font-family:'Segoe UI',Arial,sans-serif;width:295px;border-radius:14px;                 overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.22);border:1px solid #eee;">        <!-- ── Header ── -->       <div style="background:linear-gradient(135deg,#e84393 0%,#c0392b 100%);padding:16px 18px;">         <div style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.7);                     text-transform:uppercase;margin-bottom:5px;">           Metro Line 1 &nbsp;·&nbsp; Station 9 / 14         </div>         <div style="font-size:21px;font-weight:800;color:#fff;line-height:1.15;">           Binh Thai         </div>         <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:3px;">           Thu Duc         </div>       </div>        <!-- ── Body ── -->       <div style="background:#fff;padding:16px 18px;">          <!-- Price block -->         <div style="background:#f0f8ff;border-left:4px solid #0277bd;                     padding:11px 14px;border-radius:0 10px 10px 0;margin-bottom:13px;">           <div style="font-size:9px;color:#aaa;letter-spacing:2px;                       text-transform:uppercase;">Market Price &nbsp;·&nbsp; 2026</div>           <div style="font-size:30px;font-weight:900;color:#0277bd;                       line-height:1.1;margin-top:3px;">             55M           </div>           <div style="font-size:11px;color:#999;margin-top:2px;">VND per m²</div>         </div>          <!-- Investment rating block -->         <div style="background:#f8f9fa;border-radius:10px;padding:11px 14px;                     margin-bottom:13px;display:flex;align-items:center;                     justify-content:space-between;">           <div style="flex:1;min-width:0;">             <div style="font-size:9px;color:#aaa;letter-spacing:2px;                         text-transform:uppercase;">2026 Investment Rating</div>             <div style="font-size:15px;font-weight:800;color:#0277bd;                         margin-top:3px;">Emerging Zone</div>             <div style="font-size:11px;color:#999;margin-top:2px;">Outer suburban · High upside risk</div>           </div>           <div style="text-align:center;padding-left:12px;flex-shrink:0;">             <div style="font-size:17px;color:#9e9e9e;                         letter-spacing:1px;">★★☆☆☆</div>             <div style="font-size:9px;color:#ccc;letter-spacing:1px;                         text-transform:uppercase;margin-top:3px;">               Tier 4             </div>           </div>         </div>          <!-- Stats row -->         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Walking Zone</div>             <div style="font-size:15px;font-weight:700;color:#333;margin-top:3px;">500 m</div>           </div>           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Route</div>             <div style="font-size:15px;font-weight:700;color:#e84393;margin-top:3px;">               Metro 1             </div>           </div>         </div>          <div style="text-align:center;font-size:10px;color:#ddd;">           Data for illustrative purposes only         </div>       </div>     </div>     </div>`)[0];
+                popup_0b5895f3b08695579ac022e978f6be9f.setContent(html_9cd11f16e40bfcc19f16cb639dae5883);
+            
+        
+
+        circle_marker_2494f2fa8826684de067a2f0f3cd159f.bindPopup(popup_0b5895f3b08695579ac022e978f6be9f)
+        ;
+
+        
+    
+    
+            circle_marker_2494f2fa8826684de067a2f0f3cd159f.bindTooltip(
+                `<div>
+                     <b>Binh Thai</b>&nbsp;·&nbsp;55M/m²&nbsp;·&nbsp;<i>Emerging Zone</i>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1105743a5e4cd870cc023ed7eed50ccc = L.circleMarker(
+                [10.849, 106.754],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_e50615cb9693d032435204aebac9aa58);
+        
+    
+        var popup_e3081b83b9c985eb4e8e631492e2b5c9 = L.popup({
+  "maxWidth": 315,
+});
+
+        
+            
+                var html_99ea201288385474921295082ab5d88f = $(`<div id="html_99ea201288385474921295082ab5d88f" style="width: 100.0%; height: 100.0%;">     <div style="font-family:'Segoe UI',Arial,sans-serif;width:295px;border-radius:14px;                 overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.22);border:1px solid #eee;">        <!-- ── Header ── -->       <div style="background:linear-gradient(135deg,#e84393 0%,#c0392b 100%);padding:16px 18px;">         <div style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.7);                     text-transform:uppercase;margin-bottom:5px;">           Metro Line 1 &nbsp;·&nbsp; Station 10 / 14         </div>         <div style="font-size:21px;font-weight:800;color:#fff;line-height:1.15;">           Thu Duc         </div>         <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:3px;">           Thu Duc         </div>       </div>        <!-- ── Body ── -->       <div style="background:#fff;padding:16px 18px;">          <!-- Price block -->         <div style="background:#f0f8ff;border-left:4px solid #0277bd;                     padding:11px 14px;border-radius:0 10px 10px 0;margin-bottom:13px;">           <div style="font-size:9px;color:#aaa;letter-spacing:2px;                       text-transform:uppercase;">Market Price &nbsp;·&nbsp; 2026</div>           <div style="font-size:30px;font-weight:900;color:#0277bd;                       line-height:1.1;margin-top:3px;">             50M           </div>           <div style="font-size:11px;color:#999;margin-top:2px;">VND per m²</div>         </div>          <!-- Investment rating block -->         <div style="background:#f8f9fa;border-radius:10px;padding:11px 14px;                     margin-bottom:13px;display:flex;align-items:center;                     justify-content:space-between;">           <div style="flex:1;min-width:0;">             <div style="font-size:9px;color:#aaa;letter-spacing:2px;                         text-transform:uppercase;">2026 Investment Rating</div>             <div style="font-size:15px;font-weight:800;color:#0277bd;                         margin-top:3px;">Emerging Zone</div>             <div style="font-size:11px;color:#999;margin-top:2px;">Outer suburban · High upside risk</div>           </div>           <div style="text-align:center;padding-left:12px;flex-shrink:0;">             <div style="font-size:17px;color:#9e9e9e;                         letter-spacing:1px;">★★☆☆☆</div>             <div style="font-size:9px;color:#ccc;letter-spacing:1px;                         text-transform:uppercase;margin-top:3px;">               Tier 4             </div>           </div>         </div>          <!-- Stats row -->         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Walking Zone</div>             <div style="font-size:15px;font-weight:700;color:#333;margin-top:3px;">500 m</div>           </div>           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Route</div>             <div style="font-size:15px;font-weight:700;color:#e84393;margin-top:3px;">               Metro 1             </div>           </div>         </div>          <div style="text-align:center;font-size:10px;color:#ddd;">           Data for illustrative purposes only         </div>       </div>     </div>     </div>`)[0];
+                popup_e3081b83b9c985eb4e8e631492e2b5c9.setContent(html_99ea201288385474921295082ab5d88f);
+            
+        
+
+        circle_marker_1105743a5e4cd870cc023ed7eed50ccc.bindPopup(popup_e3081b83b9c985eb4e8e631492e2b5c9)
+        ;
+
+        
+    
+    
+            circle_marker_1105743a5e4cd870cc023ed7eed50ccc.bindTooltip(
+                `<div>
+                     <b>Thu Duc</b>&nbsp;·&nbsp;50M/m²&nbsp;·&nbsp;<i>Emerging Zone</i>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4252e5aae0abe6d29f071d9d998d3c37 = L.circleMarker(
+                [10.8536, 106.7975],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_e50615cb9693d032435204aebac9aa58);
+        
+    
+        var popup_ca96866f838906698b08dd7b566eacb5 = L.popup({
+  "maxWidth": 315,
+});
+
+        
+            
+                var html_3eac308f3b68b971cc21c7d7e7537a0c = $(`<div id="html_3eac308f3b68b971cc21c7d7e7537a0c" style="width: 100.0%; height: 100.0%;">     <div style="font-family:'Segoe UI',Arial,sans-serif;width:295px;border-radius:14px;                 overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.22);border:1px solid #eee;">        <!-- ── Header ── -->       <div style="background:linear-gradient(135deg,#e84393 0%,#c0392b 100%);padding:16px 18px;">         <div style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.7);                     text-transform:uppercase;margin-bottom:5px;">           Metro Line 1 &nbsp;·&nbsp; Station 11 / 14         </div>         <div style="font-size:21px;font-weight:800;color:#fff;line-height:1.15;">           High-Tech Park         </div>         <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:3px;">           Thu Duc         </div>       </div>        <!-- ── Body ── -->       <div style="background:#fff;padding:16px 18px;">          <!-- Price block -->         <div style="background:#f0f8ff;border-left:4px solid #0277bd;                     padding:11px 14px;border-radius:0 10px 10px 0;margin-bottom:13px;">           <div style="font-size:9px;color:#aaa;letter-spacing:2px;                       text-transform:uppercase;">Market Price &nbsp;·&nbsp; 2026</div>           <div style="font-size:30px;font-weight:900;color:#0277bd;                       line-height:1.1;margin-top:3px;">             45M           </div>           <div style="font-size:11px;color:#999;margin-top:2px;">VND per m²</div>         </div>          <!-- Investment rating block -->         <div style="background:#f8f9fa;border-radius:10px;padding:11px 14px;                     margin-bottom:13px;display:flex;align-items:center;                     justify-content:space-between;">           <div style="flex:1;min-width:0;">             <div style="font-size:9px;color:#aaa;letter-spacing:2px;                         text-transform:uppercase;">2026 Investment Rating</div>             <div style="font-size:15px;font-weight:800;color:#0277bd;                         margin-top:3px;">Emerging Zone</div>             <div style="font-size:11px;color:#999;margin-top:2px;">Outer suburban · High upside risk</div>           </div>           <div style="text-align:center;padding-left:12px;flex-shrink:0;">             <div style="font-size:17px;color:#9e9e9e;                         letter-spacing:1px;">★★☆☆☆</div>             <div style="font-size:9px;color:#ccc;letter-spacing:1px;                         text-transform:uppercase;margin-top:3px;">               Tier 4             </div>           </div>         </div>          <!-- Stats row -->         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Walking Zone</div>             <div style="font-size:15px;font-weight:700;color:#333;margin-top:3px;">500 m</div>           </div>           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Route</div>             <div style="font-size:15px;font-weight:700;color:#e84393;margin-top:3px;">               Metro 1             </div>           </div>         </div>          <div style="text-align:center;font-size:10px;color:#ddd;">           Data for illustrative purposes only         </div>       </div>     </div>     </div>`)[0];
+                popup_ca96866f838906698b08dd7b566eacb5.setContent(html_3eac308f3b68b971cc21c7d7e7537a0c);
+            
+        
+
+        circle_marker_4252e5aae0abe6d29f071d9d998d3c37.bindPopup(popup_ca96866f838906698b08dd7b566eacb5)
+        ;
+
+        
+    
+    
+            circle_marker_4252e5aae0abe6d29f071d9d998d3c37.bindTooltip(
+                `<div>
+                     <b>High-Tech Park</b>&nbsp;·&nbsp;45M/m²&nbsp;·&nbsp;<i>Emerging Zone</i>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f177b7951f26ab6f1ce7c52bcc403ca5 = L.circleMarker(
+                [10.87, 106.802],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_e50615cb9693d032435204aebac9aa58);
+        
+    
+        var popup_af7aee8ba9414ba9fe4fc7957de2b424 = L.popup({
+  "maxWidth": 315,
+});
+
+        
+            
+                var html_a6d693d459f0ae795506c5cbc53c5f2d = $(`<div id="html_a6d693d459f0ae795506c5cbc53c5f2d" style="width: 100.0%; height: 100.0%;">     <div style="font-family:'Segoe UI',Arial,sans-serif;width:295px;border-radius:14px;                 overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.22);border:1px solid #eee;">        <!-- ── Header ── -->       <div style="background:linear-gradient(135deg,#e84393 0%,#c0392b 100%);padding:16px 18px;">         <div style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.7);                     text-transform:uppercase;margin-bottom:5px;">           Metro Line 1 &nbsp;·&nbsp; Station 12 / 14         </div>         <div style="font-size:21px;font-weight:800;color:#fff;line-height:1.15;">           VNU-HCM         </div>         <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:3px;">           Thu Duc         </div>       </div>        <!-- ── Body ── -->       <div style="background:#fff;padding:16px 18px;">          <!-- Price block -->         <div style="background:#f0f8ff;border-left:4px solid #0277bd;                     padding:11px 14px;border-radius:0 10px 10px 0;margin-bottom:13px;">           <div style="font-size:9px;color:#aaa;letter-spacing:2px;                       text-transform:uppercase;">Market Price &nbsp;·&nbsp; 2026</div>           <div style="font-size:30px;font-weight:900;color:#0277bd;                       line-height:1.1;margin-top:3px;">             40M           </div>           <div style="font-size:11px;color:#999;margin-top:2px;">VND per m²</div>         </div>          <!-- Investment rating block -->         <div style="background:#f8f9fa;border-radius:10px;padding:11px 14px;                     margin-bottom:13px;display:flex;align-items:center;                     justify-content:space-between;">           <div style="flex:1;min-width:0;">             <div style="font-size:9px;color:#aaa;letter-spacing:2px;                         text-transform:uppercase;">2026 Investment Rating</div>             <div style="font-size:15px;font-weight:800;color:#0277bd;                         margin-top:3px;">Emerging Zone</div>             <div style="font-size:11px;color:#999;margin-top:2px;">Outer suburban · High upside risk</div>           </div>           <div style="text-align:center;padding-left:12px;flex-shrink:0;">             <div style="font-size:17px;color:#9e9e9e;                         letter-spacing:1px;">★★☆☆☆</div>             <div style="font-size:9px;color:#ccc;letter-spacing:1px;                         text-transform:uppercase;margin-top:3px;">               Tier 4             </div>           </div>         </div>          <!-- Stats row -->         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Walking Zone</div>             <div style="font-size:15px;font-weight:700;color:#333;margin-top:3px;">500 m</div>           </div>           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Route</div>             <div style="font-size:15px;font-weight:700;color:#e84393;margin-top:3px;">               Metro 1             </div>           </div>         </div>          <div style="text-align:center;font-size:10px;color:#ddd;">           Data for illustrative purposes only         </div>       </div>     </div>     </div>`)[0];
+                popup_af7aee8ba9414ba9fe4fc7957de2b424.setContent(html_a6d693d459f0ae795506c5cbc53c5f2d);
+            
+        
+
+        circle_marker_f177b7951f26ab6f1ce7c52bcc403ca5.bindPopup(popup_af7aee8ba9414ba9fe4fc7957de2b424)
+        ;
+
+        
+    
+    
+            circle_marker_f177b7951f26ab6f1ce7c52bcc403ca5.bindTooltip(
+                `<div>
+                     <b>VNU-HCM</b>&nbsp;·&nbsp;40M/m²&nbsp;·&nbsp;<i>Emerging Zone</i>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_76397ffeeeb8ea2e3517333c53b6ab45 = L.circleMarker(
+                [10.882, 106.8195],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_e50615cb9693d032435204aebac9aa58);
+        
+    
+        var popup_16799a629a913c5b773c4818bef304fa = L.popup({
+  "maxWidth": 315,
+});
+
+        
+            
+                var html_9248d62bad6bb421be5e2b659a5202c8 = $(`<div id="html_9248d62bad6bb421be5e2b659a5202c8" style="width: 100.0%; height: 100.0%;">     <div style="font-family:'Segoe UI',Arial,sans-serif;width:295px;border-radius:14px;                 overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.22);border:1px solid #eee;">        <!-- ── Header ── -->       <div style="background:linear-gradient(135deg,#e84393 0%,#c0392b 100%);padding:16px 18px;">         <div style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.7);                     text-transform:uppercase;margin-bottom:5px;">           Metro Line 1 &nbsp;·&nbsp; Station 13 / 14         </div>         <div style="font-size:21px;font-weight:800;color:#fff;line-height:1.15;">           Tang Nhon Phu B         </div>         <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:3px;">           Thu Duc         </div>       </div>        <!-- ── Body ── -->       <div style="background:#fff;padding:16px 18px;">          <!-- Price block -->         <div style="background:#f0f8ff;border-left:4px solid #0277bd;                     padding:11px 14px;border-radius:0 10px 10px 0;margin-bottom:13px;">           <div style="font-size:9px;color:#aaa;letter-spacing:2px;                       text-transform:uppercase;">Market Price &nbsp;·&nbsp; 2026</div>           <div style="font-size:30px;font-weight:900;color:#0277bd;                       line-height:1.1;margin-top:3px;">             35M           </div>           <div style="font-size:11px;color:#999;margin-top:2px;">VND per m²</div>         </div>          <!-- Investment rating block -->         <div style="background:#f8f9fa;border-radius:10px;padding:11px 14px;                     margin-bottom:13px;display:flex;align-items:center;                     justify-content:space-between;">           <div style="flex:1;min-width:0;">             <div style="font-size:9px;color:#aaa;letter-spacing:2px;                         text-transform:uppercase;">2026 Investment Rating</div>             <div style="font-size:15px;font-weight:800;color:#0277bd;                         margin-top:3px;">Emerging Zone</div>             <div style="font-size:11px;color:#999;margin-top:2px;">Outer suburban · High upside risk</div>           </div>           <div style="text-align:center;padding-left:12px;flex-shrink:0;">             <div style="font-size:17px;color:#9e9e9e;                         letter-spacing:1px;">★★☆☆☆</div>             <div style="font-size:9px;color:#ccc;letter-spacing:1px;                         text-transform:uppercase;margin-top:3px;">               Tier 4             </div>           </div>         </div>          <!-- Stats row -->         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Walking Zone</div>             <div style="font-size:15px;font-weight:700;color:#333;margin-top:3px;">500 m</div>           </div>           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Route</div>             <div style="font-size:15px;font-weight:700;color:#e84393;margin-top:3px;">               Metro 1             </div>           </div>         </div>          <div style="text-align:center;font-size:10px;color:#ddd;">           Data for illustrative purposes only         </div>       </div>     </div>     </div>`)[0];
+                popup_16799a629a913c5b773c4818bef304fa.setContent(html_9248d62bad6bb421be5e2b659a5202c8);
+            
+        
+
+        circle_marker_76397ffeeeb8ea2e3517333c53b6ab45.bindPopup(popup_16799a629a913c5b773c4818bef304fa)
+        ;
+
+        
+    
+    
+            circle_marker_76397ffeeeb8ea2e3517333c53b6ab45.bindTooltip(
+                `<div>
+                     <b>Tang Nhon Phu B</b>&nbsp;·&nbsp;35M/m²&nbsp;·&nbsp;<i>Emerging Zone</i>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_85d43bf0b114cd0fd48be42f1cdb0bfc = L.circleMarker(
+                [10.8882, 106.8318],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4fc3f7", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 2.5}
+            ).addTo(feature_group_e50615cb9693d032435204aebac9aa58);
+        
+    
+        var popup_b500610ab6a1658b75e8104539476e27 = L.popup({
+  "maxWidth": 315,
+});
+
+        
+            
+                var html_6b986056ba7f9c5770fcb7d82989cfa1 = $(`<div id="html_6b986056ba7f9c5770fcb7d82989cfa1" style="width: 100.0%; height: 100.0%;">     <div style="font-family:'Segoe UI',Arial,sans-serif;width:295px;border-radius:14px;                 overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.22);border:1px solid #eee;">        <!-- ── Header ── -->       <div style="background:linear-gradient(135deg,#e84393 0%,#c0392b 100%);padding:16px 18px;">         <div style="font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.7);                     text-transform:uppercase;margin-bottom:5px;">           Metro Line 1 &nbsp;·&nbsp; Station 14 / 14         </div>         <div style="font-size:21px;font-weight:800;color:#fff;line-height:1.15;">           Suoi Tien         </div>         <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:3px;">           Thu Duc (former D9)         </div>       </div>        <!-- ── Body ── -->       <div style="background:#fff;padding:16px 18px;">          <!-- Price block -->         <div style="background:#f0f8ff;border-left:4px solid #0277bd;                     padding:11px 14px;border-radius:0 10px 10px 0;margin-bottom:13px;">           <div style="font-size:9px;color:#aaa;letter-spacing:2px;                       text-transform:uppercase;">Market Price &nbsp;·&nbsp; 2026</div>           <div style="font-size:30px;font-weight:900;color:#0277bd;                       line-height:1.1;margin-top:3px;">             30M           </div>           <div style="font-size:11px;color:#999;margin-top:2px;">VND per m²</div>         </div>          <!-- Investment rating block -->         <div style="background:#f8f9fa;border-radius:10px;padding:11px 14px;                     margin-bottom:13px;display:flex;align-items:center;                     justify-content:space-between;">           <div style="flex:1;min-width:0;">             <div style="font-size:9px;color:#aaa;letter-spacing:2px;                         text-transform:uppercase;">2026 Investment Rating</div>             <div style="font-size:15px;font-weight:800;color:#0277bd;                         margin-top:3px;">Emerging Zone</div>             <div style="font-size:11px;color:#999;margin-top:2px;">Outer suburban · High upside risk</div>           </div>           <div style="text-align:center;padding-left:12px;flex-shrink:0;">             <div style="font-size:17px;color:#9e9e9e;                         letter-spacing:1px;">★★☆☆☆</div>             <div style="font-size:9px;color:#ccc;letter-spacing:1px;                         text-transform:uppercase;margin-top:3px;">               Tier 4             </div>           </div>         </div>          <!-- Stats row -->         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Walking Zone</div>             <div style="font-size:15px;font-weight:700;color:#333;margin-top:3px;">500 m</div>           </div>           <div style="background:#f8f9fa;border-radius:8px;padding:9px 10px;text-align:center;">             <div style="font-size:9px;color:#bbb;letter-spacing:1px;                         text-transform:uppercase;">Route</div>             <div style="font-size:15px;font-weight:700;color:#e84393;margin-top:3px;">               Metro 1             </div>           </div>         </div>          <div style="text-align:center;font-size:10px;color:#ddd;">           Data for illustrative purposes only         </div>       </div>     </div>     </div>`)[0];
+                popup_b500610ab6a1658b75e8104539476e27.setContent(html_6b986056ba7f9c5770fcb7d82989cfa1);
+            
+        
+
+        circle_marker_85d43bf0b114cd0fd48be42f1cdb0bfc.bindPopup(popup_b500610ab6a1658b75e8104539476e27)
+        ;
+
+        
+    
+    
+            circle_marker_85d43bf0b114cd0fd48be42f1cdb0bfc.bindTooltip(
+                `<div>
+                     <b>Suoi Tien</b>&nbsp;·&nbsp;30M/m²&nbsp;·&nbsp;<i>Emerging Zone</i>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_e50615cb9693d032435204aebac9aa58.addTo(map_c52fe4158df029ff8a1a281cdad2601a);
+        
+    
+
+            var geocoderOpts_geocoder_faf10efb434b6d1121b55c91675c4826 = {
+  "collapsed": false,
+  "position": "topleft",
+  "defaultMarkGeocode": true,
+  "zoom": 11,
+  "provider": "nominatim",
+  "providerOptions": {
+},
+};
+
+            // note: geocoder name should start with lowercase
+            var geocoderName_geocoder_faf10efb434b6d1121b55c91675c4826 = geocoderOpts_geocoder_faf10efb434b6d1121b55c91675c4826["provider"];
+
+            var customGeocoder_geocoder_faf10efb434b6d1121b55c91675c4826 = L.Control.Geocoder[ geocoderName_geocoder_faf10efb434b6d1121b55c91675c4826 ](
+                geocoderOpts_geocoder_faf10efb434b6d1121b55c91675c4826['providerOptions']
+            );
+            geocoderOpts_geocoder_faf10efb434b6d1121b55c91675c4826["geocoder"] = customGeocoder_geocoder_faf10efb434b6d1121b55c91675c4826;
+
+            L.Control.geocoder(
+                geocoderOpts_geocoder_faf10efb434b6d1121b55c91675c4826
+            ).on('markgeocode', function(e) {
+                var zoom = geocoderOpts_geocoder_faf10efb434b6d1121b55c91675c4826['zoom'] || map_c52fe4158df029ff8a1a281cdad2601a.getZoom();
+                map_c52fe4158df029ff8a1a281cdad2601a.setView(e.geocode.center, zoom);
+            }).addTo(map_c52fe4158df029ff8a1a281cdad2601a);
+
+        
+    
+            var layer_control_98617552dfa0071086f7f96f3508e3c9_layers = {
+                base_layers : {
+                    "\u2600\ufe0f Light Mode" : tile_layer_fdd72fa87aa7dc516665ec74ba3b8654,
+                    "\ud83c\udf19 Dark Mode" : tile_layer_85c4a7339a6daed722e381833a04b8c7,
+                    "\ud83d\udef0\ufe0f Satellite" : tile_layer_86f24bffd3a8070c1a902b7e26b7c82b,
+                },
+                overlays :  {
+                    "Price Heatmap" : feature_group_bb1dabf672c59250c69a723fd5af2979,
+                    "500m Walking Zone" : feature_group_e62dba93918a79e5c0181e2c8f6e44d3,
+                    "Metro Line Route" : feature_group_816ebbc122106b330caa8bfe6883faa8,
+                    "Metro Stations" : feature_group_e50615cb9693d032435204aebac9aa58,
+                },
+            };
+            let layer_control_98617552dfa0071086f7f96f3508e3c9 = L.control.layers(
+                layer_control_98617552dfa0071086f7f96f3508e3c9_layers.base_layers,
+                layer_control_98617552dfa0071086f7f96f3508e3c9_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_c52fe4158df029ff8a1a281cdad2601a);
+
+        
+</script>
+</html>
